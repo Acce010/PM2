@@ -22,9 +22,12 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
  // TODO Konstruktorprobleme auflösen
 	public TerminMitWiederholungImpl(String beschreibung, Datum start, Dauer dauer, WiederholungType type, int anzahl,
 			int zyklus) {
+			super(beschreibung, start, dauer);	//TerminImpl konstruktor aufruf
+			this.wdh = new WiederholungImpl(type,anzahl, zyklus);
 	}
 
 	public TerminMitWiederholungImpl(String beschreibung, Datum start, Dauer dauer, Wiederholung wdh) {
+		this(beschreibung, start, dauer, wdh.getType(), wdh.anzahl(),wdh.getZyklus()); //Kaskadischer Aufruf
 	}
 	
 	
@@ -35,19 +38,19 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 
 	@Override
 	public Map<Datum, Termin> termineIn(Monat monat) {
-		// TODO auf termineFuer zurückführen
+		termineFuer(monat);
 		return null;
 	}
 
 	@Override
 	public Map<Datum, Termin> termineIn(Woche woche) {
-		// TODO auf termineFuer zurückführen
+		termineFuer(woche);
 		return null;
 	}
 
 	@Override
 	public Map<Datum, Termin> termineAn(Tag tag) {
-		// TODO auf termineFuer zurückführen
+		termineFuer(tag);
 		return null;
 	}
 
@@ -84,18 +87,19 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 	@Override
 	public IntervallIterator<Datum> intervallIterator(int von, int bis) {
 		return new IntervallIterator<Datum>() {
-			// TODO end Index als upper bound merken / cursor initialisieren
+			private int upperbound = bis;
+			private int cursor = von;
 			
 			@Override
 			public boolean hasNext() {
-				// TODO in Abhängigkeit von cursor und upper bound (upper bound ist inkl.)
-				return false;
+				//Pr�fen ob der Cursor am Ende ist und ob der Cursor nicht das Max Intervall �berschritten hat.
+				return (cursor <= upperbound) && (cursor <= TerminMitWiederholungImpl.this.getWdh().maxIntervallIndex()); //Aufruf der obigen Klasse aus unter Klasse
 			}
 
 			@Override
 			public Datum next() {
-				// TODO nächstes Element mit geeigneter Methode von Wiederholung berechnen
-				return null;
+				//Ausgabe des n�chsten Datums im TerminMitWiederholungs Objekt, und erh�hen des Zeigers f�r die Postion der Wiederholung.
+				return TerminMitWiederholungImpl.this.getWdh().naechstesDatum(cursor++);
 			}
 
 		};
@@ -104,6 +108,7 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 
 	@Override
 	public Map<Datum, Termin> termineFuer(DatumsGroesse groesse) {
+		
 		// TODO Indizes fuer Start und End Intervall berechnen
 		
 		// TODO Indizes auf Gültigkeit prüfen
