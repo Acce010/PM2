@@ -32,9 +32,7 @@ public class TerminKalenderImpl implements TerminKalender {
 
 	@Override
 	public boolean terminLoeschen(Termin termin) {
-		//TODO
-		kalender = kalender.stream().filter(ele -> !(ele.equals(termin))).collect(Collectors.toList());
-		return true;
+		return kalender.removeIf(kt -> kt.equals(termin));
 	}
 
 	@Override
