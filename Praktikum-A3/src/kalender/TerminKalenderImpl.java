@@ -16,8 +16,12 @@ import kalender.interfaces.Woche;
 
 public class TerminKalenderImpl implements TerminKalender {
 	
-	List<Termin> kalender = new LinkedList<Termin>();
+	List<Termin> kalender;
 
+	public TerminKalenderImpl(){
+		this.kalender = new LinkedList<Termin>();
+	}
+	
 	@Override
 	public boolean eintragen(Termin termin) {
 		kalender.add(termin);
