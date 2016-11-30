@@ -1,5 +1,6 @@
 package kalender;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 	}
 
 	public TerminMitWiederholungImpl(String beschreibung, Datum start, Dauer dauer, Wiederholung wdh) {
+		//super(beschreibung, start, dauer); this.wdh=wdh;
 		this(beschreibung, start, dauer, wdh.getType(), wdh.anzahl(),wdh.getZyklus()); //Kaskadischer Aufruf
 	}
 	
@@ -38,20 +40,21 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 
 	@Override
 	public Map<Datum, Termin> termineIn(Monat monat) {
-		termineFuer(monat);
-		return null;
+		Map<Datum, Termin> termine = termineFuer(monat);
+		return (termine != null) ? termine : (new HashMap<Datum, Termin>()); //Falls kein Termin exisitert eine Leere Map zurück geben
+		//return termineFuer(monat) ? termineFuer(monat) : (new HashMap<Datum, Termin>());
 	}
 
 	@Override
 	public Map<Datum, Termin> termineIn(Woche woche) {
-		termineFuer(woche);
-		return null;
+		Map<Datum, Termin> termine = termineFuer(woche);
+		return (termine != null) ? termine : (new HashMap<Datum, Termin>());
 	}
 
 	@Override
 	public Map<Datum, Termin> termineAn(Tag tag) {
-		termineFuer(tag);
-		return null;
+		Map<Datum, Termin> termine = termineFuer(tag);
+		return (termine != null) ? termine : (new HashMap<Datum, Termin>());
 	}
 
 	
@@ -101,7 +104,6 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 				//Ausgabe des nächsten Datums im TerminMitWiederholungs Objekt, und erhöhen des Zeigers für die Postion der Wiederholung.
 				return TerminMitWiederholungImpl.this.getWdh().naechstesDatum(cursor++);
 			}
-
 		};
 	}
 
@@ -110,20 +112,25 @@ public class TerminMitWiederholungImpl extends TerminImpl implements TerminMitWi
 	public Map<Datum, Termin> termineFuer(DatumsGroesse groesse) {
 		
 		// TODO Indizes fuer Start und End Intervall berechnen
-		
+		int startIndex = this.getWdh().naechstesIntervall(groesse.getStart());
+		int endIndex = this.getWdh().naechstesIntervall(groesse.getEnde());
 		// TODO Indizes auf GÃ¼ltigkeit prÃ¼fen
 		// wenn endIndex > maxIntervallIndex dann setze endIndex auf
 		// maxIntervallIndex
-		//
 		// wenn endIndex < startIndex || endIndex < 0 || startIndex < 0 ||
 		// endIndex > maxIntervallIndex
 		// gib null zurÃ¼ck
-
-		// 
+		if(endIndex < startIndex || endIndex < 0 || startIndex < 0 || endIndex > this.getWdh().maxIntervallIndex()) //Indizies Prüfen
+			return null;
 		// TODO hier den Intervalliterator nutzen 
 		// Map erzeugen und die Wiederholungen einsammeln
-		
-		return null;
+		Map<Datum, Termin> termine = new HashMap<Datum, Termin>();
+		IntervallIterator<Datum> iter = intervallIterator(startIndex, endIndex);
+		while(iter.hasNext()){
+			Datum next_date = iter.next();
+			termine.put(next_date, TerminMitWiederholungImpl.this);
+		}
+		return termine;
 	}
 
 	public class WiederholungImpl implements Wiederholung {
