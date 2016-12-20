@@ -23,6 +23,7 @@ public class DatumImpl implements Datum {
 		intern.clear();
 		intern.set(Calendar.YEAR, tag.getJahr());
 		intern.set(Calendar.MONTH, tag.getMonat());
+		intern.set(Calendar.DAY_OF_MONTH, tag.getTagImMonat());
 		intern.set(Calendar.HOUR_OF_DAY, uhrzeit.getStunde());
 		intern.set(Calendar.MINUTE, uhrzeit.getMinuten());
 	}

@@ -86,7 +86,8 @@ public class TagImpl implements Tag {
 
 	@Override
 	public String toString(){
-		return String.format("Tag %d" + "[" + getStart() + "," + getEnde() +"]", getTagImJahr());
+	//	return String.format("Tag %d" + "[" + getStart() + "," + getEnde() +"]", getTagImJahr());
+		return String.format("Tag %d" + "[00:00:00 - 23:59:59]");
 	}
 	
 }
