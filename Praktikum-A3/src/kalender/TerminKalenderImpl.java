@@ -70,4 +70,13 @@ public class TerminKalenderImpl implements TerminKalender {
 		return tabelle;
 	}
 
+//	@Override
+//	public String toString(){
+//		String string = "";
+//		for(Termin term : kalender){
+//			string+=term.getBeschreibung();
+//		}
+//		return string;
+//	}
+//	
 }

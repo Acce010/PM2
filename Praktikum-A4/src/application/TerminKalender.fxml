@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -17,9 +18,14 @@
             <TextField fx:id="dauer" layoutY="49.0" promptText="Dauer" />
             <TextField fx:id="beschreibung" layoutY="74.0" promptText="Beschreibung" />
             <Button fx:id="submitbutton" layoutY="99.0" mnemonicParsing="false" text="Submit" />
-            <TextField fx:id="widtyp" layoutX="167.0" layoutY="25.0" promptText="WiederholungsTyp" />
             <TextField fx:id="anzahl" layoutX="167.0" layoutY="50.0" promptText="Anzahl" />
             <TextField fx:id="zyklus" layoutX="167.0" layoutY="75.0" promptText="Zyklus" />
+            <RadioButton fx:id="widtag" layoutX="167.0" layoutY="29.0" mnemonicParsing="false" selected="true" text="Täglich">
+               <toggleGroup>
+                  <ToggleGroup fx:id="wiederholung" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="widwoch" layoutX="242.0" layoutY="29.0" mnemonicParsing="false" text="Wöchentlich" toggleGroup="$wiederholung" />
          </children>
       </AnchorPane>
    </children>
