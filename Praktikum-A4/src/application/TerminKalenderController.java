@@ -10,6 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import kalender.*;
 import kalender.TerminMitWiederholungImpl.WiederholungImpl;
 import kalender.interfaces.*;
@@ -48,6 +49,9 @@ public class TerminKalenderController {
 
 	@FXML
 	private RadioButton widtag;
+	
+    @FXML
+    private Text ausgabe;
 
 	@FXML
 	private TerminKalenderImpl terminkalender = new TerminKalenderImpl();
@@ -67,29 +71,54 @@ public class TerminKalenderController {
 		});
 
 		submitbutton.setOnAction((ActionEvent e) -> {
-			if (!beginn.getText().isEmpty() && !beschreibung.getText().isEmpty() && !dauer.getText().isEmpty()) {
+			if (isSubmit_rdy() && check_field()) {
 				if (!togglebutton.isSelected()) { // Nicht ausgewählt
 					termin_erstellen();
 					field_clear();
-				} else if (!anzahl.getText().isEmpty() && !zyklus.getText().isEmpty()) {
+					ausgabe.setText("Termin erstellt");
+				} else if (isSubmit_wid_rdy() && check_field_wid()) {
 					termin_erstellen_wid();
 					field_clear();
+					ausgabe.setText("Termin mit Wid erstellt");
 				} else {
-
+					ausgabe.setText("Check TextFields");
 				}
-
+			}else{
+				ausgabe.setText("Check TextFields");
 			}
 		});
 	}
 
 	@FXML
-	public boolean check_field() {
-		if (dauer.getText().matches("\\d+")) {
-			return true;
+	public boolean check_field() {	
+		if (dauer.getText().matches("\\d+") && beginn.getText().matches("[01]\\d:[0-5]\\d|2[0-3]:[0-5]\\d")) {
+			return true;	
+		}
+		return false;
+	}
+	
+	@FXML
+	public boolean check_field_wid(){
+		if (zyklus.getText().matches("\\d+") && anzahl.getText().matches("\\d+")) {
+			return true;	
 		}
 		return false;
 	}
 
+	@FXML
+	public boolean isSubmit_rdy(){
+		if (!beginn.getText().isEmpty() && !beschreibung.getText().isEmpty() && !dauer.getText().isEmpty() && !(datepick.getValue()==null))
+			return true;
+		return false;
+	}
+	
+	@FXML
+	public boolean isSubmit_wid_rdy() {
+		if(!anzahl.getText().isEmpty() && !zyklus.getText().isEmpty())
+			return true;
+		return false;
+	}
+	
 	@FXML
 	public void field_clear() {
 		beginn.clear();
@@ -123,7 +152,7 @@ public class TerminKalenderController {
 		LocalDate locdate = datepick.getValue();
 		TagImpl day = new TagImpl(locdate.getYear(), locdate.getMonthValue() - 1, locdate.getDayOfMonth());
 		DauerImpl d = new DauerImpl(Integer.valueOf(dauer.getText()));
-		String[] string = beginn.getText().split("-");
+		String[] string = beginn.getText().split(":");
 		UhrzeitImpl time = new UhrzeitImpl(Integer.valueOf(string[0]), Integer.valueOf(string[1]));
 		DatumImpl date = new DatumImpl(day, time);
 
@@ -135,7 +164,7 @@ public class TerminKalenderController {
 		LocalDate locdate = datepick.getValue();
 		TagImpl day = new TagImpl(locdate.getYear(), locdate.getMonthValue() - 1, locdate.getDayOfMonth());
 		DauerImpl d = new DauerImpl(Integer.valueOf(dauer.getText()));
-		String[] string = beginn.getText().split("-");
+		String[] string = beginn.getText().split(":");
 		UhrzeitImpl time = new UhrzeitImpl(Integer.valueOf(string[0]), Integer.valueOf(string[1]));
 		DatumImpl date = new DatumImpl(day, time);
 

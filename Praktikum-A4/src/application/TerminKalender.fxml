@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
@@ -14,18 +15,19 @@
          <children>
             <ToggleButton fx:id="togglebutton" mnemonicParsing="false" onAction="#toggle_effekt" text="Mit Wiederholung" />
             <DatePicker fx:id="datepick" layoutX="120.0" />
-            <TextField fx:id="beginn" layoutY="25.0" promptText="Beginn     hh-mm" />
-            <TextField fx:id="dauer" layoutY="49.0" promptText="Dauer" />
-            <TextField fx:id="beschreibung" layoutY="74.0" promptText="Beschreibung" />
-            <Button fx:id="submitbutton" layoutY="99.0" mnemonicParsing="false" text="Submit" />
-            <TextField fx:id="anzahl" layoutX="167.0" layoutY="50.0" promptText="Anzahl" />
-            <TextField fx:id="zyklus" layoutX="167.0" layoutY="75.0" promptText="Zyklus" />
-            <RadioButton fx:id="widtag" layoutX="167.0" layoutY="29.0" mnemonicParsing="false" selected="true" text="Täglich">
+            <TextField fx:id="beginn" layoutY="30.0" promptText="Beginn     hh:mm" />
+            <TextField fx:id="dauer" layoutY="60.0" promptText="Dauer" />
+            <TextField fx:id="beschreibung" layoutY="90.0" promptText="Beschreibung" />
+            <Button fx:id="submitbutton" layoutY="120.0" mnemonicParsing="false" text="Submit" />
+            <TextField fx:id="anzahl" layoutX="175.0" layoutY="60.0" promptText="Anzahl" />
+            <TextField fx:id="zyklus" layoutX="175.0" layoutY="90.0" promptText="Zyklus" />
+            <RadioButton fx:id="widtag" layoutX="175.0" layoutY="29.0" mnemonicParsing="false" selected="true" text="Täglich">
                <toggleGroup>
                   <ToggleGroup fx:id="wiederholung" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="widwoch" layoutX="242.0" layoutY="29.0" mnemonicParsing="false" text="Wöchentlich" toggleGroup="$wiederholung" />
+            <RadioButton fx:id="widwoch" layoutX="250.0" layoutY="29.0" mnemonicParsing="false" text="Wöchentlich" toggleGroup="$wiederholung" />
+            <Text fx:id="ausgabe" layoutX="63.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </AnchorPane>
    </children>
