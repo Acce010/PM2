@@ -27,7 +27,7 @@
                </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="widwoch" layoutX="250.0" layoutY="29.0" mnemonicParsing="false" text="Wöchentlich" toggleGroup="$wiederholung" />
-            <Text fx:id="ausgabe" layoutX="63.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fx:id="ausgabe" layoutX="63.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </AnchorPane>
    </children>
